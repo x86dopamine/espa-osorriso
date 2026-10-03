@@ -1,0 +1,12 @@
+{
+  "name": "espaco-sorriso",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Website do Espaço Sorriso, com a Dra. Rani, em Amarante/RN",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

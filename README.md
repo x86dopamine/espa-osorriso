@@ -64,3 +64,4 @@ A interação de abas foi inspirada nos padrões públicos da comunidade [21st.d
 ## Publicar
 
 É um site estático: publique `index.html`, `styles.css`, `script.js`, `favicon.svg` e `assets/` em uma hospedagem com HTTPS. O arquivo `server.mjs` é apenas o servidor de prévia local. Nenhuma etapa de build é necessária.
+
