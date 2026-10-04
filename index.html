@@ -3,22 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f9fd">
+  <meta name="theme-color" content="#05ac9a">
   <meta name="description" content="Espaço Sorriso, com a Dra. Rani. Atendimento odontológico no Amarante, em São Gonçalo do Amarante/RN. Converse e agende pelo WhatsApp.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
-  <meta property="og:title" content="Espaço Sorriso | Seu sorriso. Seu espaço.">
-  <meta property="og:description" content="Cuidado odontológico com a Dra. Rani, no Amarante. Comece por uma conversa.">
-  <title>Espaço Sorriso | Dra. Rani, Amarante/RN</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta property="og:title" content="Espaço Sorriso RN | Dentista da sua família">
+  <meta property="og:description" content="Atendimento odontológico com a Dra. Rani Nascimento, no Amarante. Agende sua consulta pelo WhatsApp.">
+  <title>Espaço Sorriso RN | Dra. Rani Nascimento, Amarante/RN</title>
+  <link rel="icon" type="image/png" href="assets/logo-espaco-sorriso.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/vendor/leaflet.css">
+  <link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hero.css">
   <script src="assets/vendor/gsap.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-  <script src="assets/vendor/leaflet.js" defer></script>
+  <script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -37,17 +38,15 @@
   </svg>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="site-header">
+  <header class="site-header identity-header">
     <div class="wrap header-inner">
-      <a class="brand" href="#inicio" aria-label="Espaço Sorriso, início">
-        <span class="brand-symbol"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg></span>
-        <span class="brand-word">espaço<span>sorriso</span></span>
+      <a class="brand identity-brand" href="#inicio" aria-label="Espaço Sorriso RN, início">
+        <img class="clinic-lockup" src="assets/logo-espaco-sorriso.png" width="1254" height="1254" alt="Espaço Sorriso RN — Rani Nascimento, dentista">
       </a>
       <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
-        <a href="#cuidado">Seu cuidado</a>
-        <a href="#dra-rani">Dra. Rani</a>
-        <a href="#localizacao">Como chegar</a>
-        <a class="nav-mobile-cta" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+        <a href="#cuidado">Sobre a clínica</a>
+        <a href="#inicio">Conheça a Dra. Rani</a>
+        <a class="nav-mobile-cta" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">Agendar consulta <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </nav>
       <a class="button header-cta" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">
         Agendar consulta <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
@@ -57,147 +56,130 @@
   </header>
 
   <main id="conteudo">
-    <section class="hero wrap" id="inicio" aria-labelledby="heroTitle">
-      <div class="hero-copy">
-        <p class="hero-place"><span class="status-dot"></span>Dra. Rani, no Amarante</p>
-        <h1 id="heroTitle"><span>Seu sorriso.</span><span>Seu espaço.</span></h1>
-        <p class="hero-description">Cuidado odontológico que começa com uma boa conversa. Um espaço para ouvir você e cuidar do que faz você sorrir.</p>
-        <div class="hero-actions">
-          <a class="button button-dark" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg> Agendar pelo WhatsApp
-            <span class="button-end"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-          </a>
-          <a class="quiet-link" href="#cuidado">Explorar o cuidado <svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
+    <section class="hero identity-hero" id="inicio" aria-labelledby="heroTitle">
+      <div class="wrap identity-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker">Dra. Rani Nascimento</p>
+          <h1 id="heroTitle"><span>Dentista da</span><span>sua família.</span></h1>
+          <p class="hero-description">Cuidado próximo. Odontologia para toda a família.</p>
+          <div class="hero-actions">
+            <a class="button appointment-button" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">
+              Agendar consulta <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
         </div>
-        <div class="hero-address">
-          <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
-          <span>Amarante, São Gonçalo do Amarante – RN<br> <a href="#localizacao">Veja a distância até a clínica</a></span>
-        </div>
-      </div>
-      <figure class="hero-visual">
-        <div class="hero-photo">
-          <img src="assets/smile-portrait.jpg" width="1400" height="2100" alt="Imagem ilustrativa de uma mulher sorrindo ao ar livre" fetchpriority="high">
-          <div class="photo-shade"></div>
-          <div class="photo-message"><span>Tem espaço para</span><strong>o seu melhor sorriso.</strong></div>
-          <svg class="hero-smile" viewBox="0 0 300 90" aria-hidden="true"><path class="smile-stroke" d="M10 10c60 84 220 84 280 0"/></svg>
-          <figcaption class="image-note">Imagem ilustrativa</figcaption>
-        </div>
-        <a class="hello-label" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">comece com um oi <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <div class="hero-corner"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg></div>
-      </figure>
-    </section>
-
-    <div class="brand-ribbon">
-      <div class="wrap ribbon-inner">
-        <p>Mais cuidado.<br> <strong>Mais motivos para sorrir.</strong></p>
-        <svg class="ribbon-smile" viewBox="0 0 300 80" aria-hidden="true"><path d="M10 8c50 82 230 82 280 0"/></svg>
-        <a href="https://www.instagram.com/dra.rani_dentista/" target="_blank" rel="noopener noreferrer"><span>Acompanhe o nosso dia a dia</span><strong>@dra.rani_dentista <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></strong></a>
-      </div>
-    </div>
-
-    <section class="care-section wrap" id="cuidado" aria-labelledby="careTitle">
-      <div class="section-heading">
-        <h2 id="careTitle">O que trouxe<br> você até aqui?</h2>
-        <p>Cada sorriso tem uma história.<br> Escolha por onde quer começar a sua conversa.</p>
-      </div>
-      <div class="care-tabs" role="tablist" aria-label="Escolha o assunto do atendimento">
-        <span class="tab-indicator" aria-hidden="true"></span>
-        <button class="care-tab" id="tab-health" role="tab" aria-selected="true" aria-controls="carePanel" data-care="health"><svg class="icon" aria-hidden="true"><use href="#i-tooth"/></svg>Cuidar da saúde bucal</button>
-        <button class="care-tab" id="tab-smile" role="tab" aria-selected="false" tabindex="-1" aria-controls="carePanel" data-care="smile"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>Melhorar meu sorriso</button>
-        <button class="care-tab" id="tab-question" role="tab" aria-selected="false" tabindex="-1" aria-controls="carePanel" data-care="question"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Tirar uma dúvida</button>
-      </div>
-      <div class="care-panel" id="carePanel" role="tabpanel" aria-labelledby="tab-health" tabindex="0">
-        <div class="care-content">
-          <span class="care-label" id="careLabel">Seu primeiro passo</span>
-          <h3 id="carePanelTitle">Vamos cuidar da sua saúde bucal.</h3>
-          <p id="carePanelDescription">Uma avaliação para entender seu sorriso e conversar sobre o cuidado de que você precisa.</p>
-          <ul class="care-points" id="carePoints"><li>Conte o que está sentindo</li><li>Entenda os próximos passos</li></ul>
-          <a class="button button-blue" id="careCta" href="https://api.whatsapp.com/send?phone=5584998035995&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20odontol%C3%B3gica." target="_blank" rel="noopener noreferrer">Conversar sobre meu cuidado <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="care-art" data-art="health" aria-hidden="true">
-          <div class="art-grid"></div>
-          <svg class="care-art-icon"><use href="#i-tooth"/></svg>
-          <span class="art-caption" id="artCaption">Cuidado que começa com você.</span>
-          <svg class="art-spark"><use href="#i-spark"/></svg>
-        </div>
+        <figure class="rani-portrait">
+          <div class="rani-photo-frame">
+            <img src="assets/dra-rani-oficial.jpg" width="1065" height="1600" alt="Dra. Rani Nascimento sorrindo em seu consultório, ao lado da cadeira odontológica" fetchpriority="high">
+          </div>
+          <figcaption class="rani-caption">Dra. Rani Nascimento <span aria-hidden="true">·</span> Cirurgiã-dentista</figcaption>
+        </figure>
+        <p class="hero-location">Amarante, São Gonçalo do Amarante — RN</p>
       </div>
     </section>
 
-    <section class="doctor-section wrap" id="dra-rani" aria-labelledby="doctorTitle">
-      <figure class="doctor-photo">
-        <img src="assets/dental-care.jpg" width="1200" height="1800" loading="lazy" alt="Imagem ilustrativa de uma avaliação odontológica com radiografia">
-        <figcaption>Imagem ilustrativa de cuidado odontológico</figcaption>
-      </figure>
-      <div class="doctor-copy">
-        <p class="doctor-label"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg>Com a Dra. Rani</p>
-        <h2 id="doctorTitle">O cuidado começa<br> quando você se sente<br> à vontade.</h2>
-        <p>Você conta o que precisa. A gente escuta, conversa e explica os próximos passos do seu atendimento.</p>
-        <p>Da primeira mensagem à consulta, o Espaço Sorriso é o seu ponto de encontro com o cuidado odontológico no Amarante.</p>
-        <a class="doctor-social" href="https://www.instagram.com/dra.rani_dentista/" target="_blank" rel="noopener noreferrer">
-          <span class="doctor-social-icon"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></span>
-          <span><small>Conheça a Dra. Rani</small><strong>@dra.rani_dentista</strong></span>
-          <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-      </div>
-      <div class="journey" aria-label="Etapas para agendar seu atendimento">
-        <div class="journey-item"><span class="journey-number">1</span><div><h3>Comece a conversa</h3><p>Conte o que precisa pelo WhatsApp.</p></div></div>
-        <div class="journey-item"><span class="journey-number">2</span><div><h3>Combine sua consulta</h3><p>Consulte os horários com a clínica.</p></div></div>
-        <div class="journey-item"><span class="journey-number">3</span><div><h3>Venha ao Espaço Sorriso</h3><p>Estamos na Av. Benedito Santana.</p></div></div>
+    <section class="care-section" id="cuidado" aria-labelledby="careTitle">
+      <div class="care-editorial wrap">
+        <figure class="care-image">
+          <div class="care-image-frame">
+            <img src="assets/dental-care.jpg" width="1200" height="1800" loading="lazy" alt="Radiografia panorâmica exibida em um tablet durante uma avaliação odontológica">
+          </div>
+        </figure>
+        <div class="care-copy">
+          <p class="care-label">Consulta com a Dra. Rani</p>
+          <h2 id="careTitle">O que você<br>precisa resolver?</h2>
+          <ul class="care-options" aria-label="Escolha o assunto da conversa">
+            <li><a href="https://api.whatsapp.com/send?phone=5584998035995" data-care-message="Olá, Dra. Rani! Estou com dor ou desconforto e gostaria de conversar com a clínica para saber como agendar." target="_blank" rel="noopener noreferrer"><span>Dor ou desconforto</span><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+            <li><a href="https://api.whatsapp.com/send?phone=5584998035995" data-care-message="Olá, Dra. Rani! Gostaria de agendar uma avaliação da saúde bucal." target="_blank" rel="noopener noreferrer"><span>Avaliar a saúde bucal</span><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+            <li><a href="https://api.whatsapp.com/send?phone=5584998035995" data-care-message="Olá, Dra. Rani! Gostaria de conversar sobre meu sorriso com a clínica." target="_blank" rel="noopener noreferrer"><span>Conversar sobre o sorriso</span><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          </ul>
+          <p class="care-description">Escolha um assunto para conhecer o atendimento ou fale diretamente com a clínica.</p>
+          <a class="care-contact" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">Falar com a clínica <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
       </div>
     </section>
 
     <section class="location-section" id="localizacao" aria-labelledby="locationTitle">
-      <div class="wrap">
-        <div class="location-heading">
-          <div><p class="location-label"><span class="status-dot"></span>Amarante, RN</p><h2 id="locationTitle">O seu sorriso<br> tem endereço.</h2></div>
-          <div class="location-address"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><p>Av. Benedito Santana<br> Amarante, São Gonçalo do Amarante – RN<br> <span>CEP 59296-515</span></p></div>
-        </div>
-        <div class="map-card">
-          <div class="map-visual">
-            <div id="clinicMap" aria-label="Mapa da referência aproximada do Espaço Sorriso" role="region" tabindex="0"></div>
-            <iframe class="map-fallback" title="Localização aproximada no Amarante" src="https://www.openstreetmap.org/export/embed.html?bbox=-35.281%2C-5.778%2C-35.257%2C-5.765&layer=mapnik&marker=-5.77139%2C-35.26867" loading="lazy"></iframe>
-            <div class="map-tag"><span class="map-tag-icon"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg></span><span>Espaço Sorriso<small>Referência em Amarante</small></span></div>
+      <div class="location-editorial">
+        <div class="location-copy">
+          <p class="location-kicker">Como chegar</p>
+          <h2 id="locationTitle">Estamos no<br>Amarante.</h2>
+          <div class="location-address">
+            <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
+            <p>Av. Benedito Santana<br>Amarante, São Gonçalo do Amarante — RN<span>CEP 59296-515</span></p>
           </div>
-          <div class="distance-card">
-            <span class="distance-kicker"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>De você até aqui</span>
-            <h3>Veja o quanto<br> estamos perto.</h3>
-            <div class="distance-display" aria-hidden="true"><strong id="distanceValue">—</strong><span id="distanceUnit">km</span></div>
-            <p class="distance-caption">Distância aproximada em linha reta</p>
-            <button class="button button-blue" id="distanceButton" type="button"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span id="distanceButtonLabel">Usar minha localização</span></button>
-            <p id="distanceResult" class="distance-result" aria-live="polite">O navegador pedirá sua permissão. O cálculo acontece aqui, no seu dispositivo.</p>
-            <a class="directions-link" id="directionsLink" href="https://www.google.com/maps/dir/?api=1&destination=Av.%20Benedito%20Santana%2C%20Amarante%2C%20S%C3%A3o%20Gon%C3%A7alo%20do%20Amarante%20-%20RN%2C%2059296-515" target="_blank" rel="noopener noreferrer">Abrir rota no Google Maps <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <p class="location-note">Coordenadas informadas pela clínica. Use o mapa para conferir o ponto de chegada.</p>
+        </div>
+        <div class="location-panel">
+          <div class="location-map-frame">
+            <div id="clinicMap" role="region" aria-label="Mapa colorido com a localização do Espaço Sorriso e a rota calculada" aria-hidden="true"></div>
+            <iframe class="location-map" title="Mapa da localização informada do Espaço Sorriso no Amarante" src="https://www.openstreetmap.org/export/embed.html?bbox=-35.286%2C-5.780%2C-35.261%2C-5.768&layer=mapnik&marker=-5.773978986883983%2C-35.27340940058038" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+          <div class="location-tools">
+            <p class="distance-kicker"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Calcule a distância e veja o trajeto.</p>
+            <button class="button location-button" id="distanceButton" type="button"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span id="distanceButtonLabel">Traçar rota com minha localização</span></button>
+            <p id="distanceResult" class="distance-result" aria-live="polite">Autorize a localização para desenhar a rota e calcular a distância.</p>
+            <a class="directions-link" id="directionsLink" href="https://www.google.com/maps/dir/?api=1&destination=-5.773978986883983%2C-35.27340940058038&travelmode=driving" target="_blank" rel="noopener noreferrer">Ver rota de carro no Google Maps <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
         </div>
-        <p class="location-note">O ponto no mapa é aproximado pelo CEP. Confirme a referência exata da clínica <a data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">pelo WhatsApp</a>.</p>
       </div>
     </section>
 
-    <section class="faq-section wrap" aria-labelledby="faqTitle">
-      <div class="faq-heading"><h2 id="faqTitle">Ficou alguma<br> dúvida?</h2><p>A conversa continua no WhatsApp.<br> Aqui estão algumas respostas para começar.</p></div>
-      <div class="faq-list">
-        <details><summary>Como agendo minha consulta?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Toque em “Agendar pelo WhatsApp”, conte o que precisa e combine um horário diretamente com a clínica.</p></details>
-        <details><summary>Preciso ativar a localização para ver o mapa?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Você pode consultar o endereço e abrir a rota sem ativar a localização. A permissão é solicitada apenas quando você escolhe calcular sua distância.</p></details>
-        <details><summary>A distância mostra o percurso de carro?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>O cálculo mostra a distância em linha reta até a referência do endereço. Para conferir o percurso de carro, a pé ou de transporte público, abra a rota no Google Maps.</p></details>
-        <details><summary>Posso tirar dúvidas antes de agendar?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Sim. Fale com a clínica pelo WhatsApp para perguntar sobre horários, atendimento e sua consulta. A indicação de tratamento depende de uma avaliação odontológica.</p></details>
+    <section class="faq-section" aria-labelledby="faqTitle">
+      <div class="faq-layout">
+        <div class="faq-intro">
+          <p class="faq-eyebrow">Perguntas frequentes</p>
+          <h2 id="faqTitle">Antes da consulta,<br>algumas respostas.</h2>
+          <p class="faq-lead">Se preferir, você pode conversar diretamente com a nossa equipe.</p>
+          <a class="faq-contact" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">Falar no WhatsApp <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="faq-list">
+          <details open>
+            <summary><span class="faq-number" aria-hidden="true">01</span><span class="faq-divider" aria-hidden="true"></span><span class="faq-question">Como agendo minha consulta?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+            <p class="faq-answer">Fale com a clínica pelo WhatsApp para contar o que precisa. Nossa equipe orienta sobre os horários disponíveis e confirma seu agendamento.</p>
+          </details>
+          <details>
+            <summary><span class="faq-number" aria-hidden="true">02</span><span class="faq-divider" aria-hidden="true"></span><span class="faq-question">Preciso ativar minha localização para ver a rota?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+            <p class="faq-answer">Não para consultar o endereço ou abrir a rota no Google Maps. A permissão é pedida apenas quando você escolhe calcular a distância e traçar o percurso neste mapa.</p>
+          </details>
+          <details>
+            <summary><span class="faq-number" aria-hidden="true">03</span><span class="faq-divider" aria-hidden="true"></span><span class="faq-question">A distância considera o trajeto de carro?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+            <p class="faq-answer">Sim. Ao autorizar sua localização, calculamos a distância e o tempo estimado de um percurso de carro. O resultado pode variar conforme a localização recebida e as condições do trajeto.</p>
+          </details>
+          <details>
+            <summary><span class="faq-number" aria-hidden="true">04</span><span class="faq-divider" aria-hidden="true"></span><span class="faq-question">Posso tirar dúvidas antes de agendar?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+            <p class="faq-answer">Sim. Fale com a clínica pelo WhatsApp para perguntar sobre horários, atendimento e sua consulta. A indicação de tratamento depende de uma avaliação odontológica.</p>
+          </details>
+        </div>
       </div>
     </section>
 
     <section class="contact-section" aria-labelledby="contactTitle">
-      <div class="wrap contact-inner"><div><p>Seu próximo sorriso começa aqui.</p><h2 id="contactTitle">Vamos marcar<br> sua consulta?</h2></div><a class="button button-white" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>Agendar pelo WhatsApp <span class="button-end"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div>
+      <div class="contact-inner">
+        <div class="contact-copy">
+          <p class="contact-eyebrow">Agendamento · Espaço Sorriso RN</p>
+          <h2 id="contactTitle">Marque sua consulta<br>com a Dra. Rani.</h2>
+        </div>
+        <div class="contact-action">
+          <p>Conte para a equipe o que você precisa.<br>O próximo passo começa pelo WhatsApp.</p>
+          <a class="button button-white contact-button" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer">
+            <span class="contact-whatsapp-mark"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+            <span class="contact-button-label">Conversar pelo WhatsApp</span>
+            <span class="contact-button-end"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap footer-top">
-      <a class="brand" href="#inicio" aria-label="Espaço Sorriso, voltar ao início"><span class="brand-symbol"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg></span><span class="brand-word">espaço<span>sorriso</span></span></a>
-      <p>Amarante, São Gonçalo do Amarante – RN<br> <a href="tel:+5584998035995">(84) 99803-5995</a></p>
-      <a class="footer-social" href="https://www.instagram.com/dra.rani_dentista/" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a>
-      <a class="back-top" href="#inicio">Voltar ao início<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="footer-bottom">
+      <a class="footer-logo" href="#inicio" aria-label="Espaço Sorriso RN"><img src="assets/logo-espaco-sorriso.png" width="1254" height="1254" alt="Espaço Sorriso RN — Rani Nascimento, dentista"></a>
+      <p class="footer-license">Raniele Nascimento de Lima · Cirurgiã-dentista · CRO-RN 5254</p>
+      <a class="footer-instagram" href="https://www.instagram.com/dra.rani_dentista/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Dra. Rani"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg><span>Instagram</span></a>
+      <span class="footer-copyright">© <span id="currentYear"></span> Espaço Sorriso RN</span>
     </div>
-    <div class="wrap footer-bottom"><p>Raniele Nascimento de Lima · Cirurgiã-dentista · CRO-RN 5254</p><span>© <span id="currentYear"></span> Espaço Sorriso</span></div>
   </footer>
   <div class="mobile-contact"><a class="button button-dark" data-whatsapp href="https://api.whatsapp.com/send?phone=5584998035995" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>Agendar pelo WhatsApp<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </body>
 </html>
-
-

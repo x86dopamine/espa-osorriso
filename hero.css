@@ -1,0 +1,306 @@
+/* Cabeçalho e primeira seção. A identidade usa a logo e o retrato originais. */
+.identity-header,
+.identity-hero {
+  --clinic-turquoise: #00b8a0;
+  --clinic-green: #003d3b;
+  --clinic-paper: #f4f8f5;
+  --clinic-muted: #54716e;
+  --clinic-font: "DM Sans", sans-serif;
+  background: var(--clinic-paper);
+  color: var(--clinic-green);
+  font-family: var(--clinic-font);
+}
+
+.identity-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin-bottom: -96px;
+  transform: translateY(-105%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  border: 0;
+  transition: transform .42s cubic-bezier(.2,.8,.2,1), opacity .24s ease, visibility 0s linear .42s;
+}
+.identity-header.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform .42s cubic-bezier(.2,.8,.2,1), opacity .24s ease, visibility 0s;
+}
+.identity-header.is-scrolled {border: 0; box-shadow: none;}
+.identity-header .header-inner,
+.identity-grid {
+  margin-inline: auto;
+}
+.identity-header .header-inner {width: min(1440px, 85vw);}
+.identity-grid {
+  width: min(1440px, 90.2vw);
+  margin-inline: auto;
+}
+.identity-header .header-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  height: 96px;
+  gap: 28px;
+}
+.identity-header .identity-brand {
+  width: 112px;
+  height: 92px;
+  flex: 0 0 112px;
+}
+.clinic-lockup {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(16%) sepia(65%) saturate(666%) hue-rotate(130deg) brightness(86%) contrast(101%);
+}
+.identity-header .main-nav {
+  grid-column: 2;
+  justify-self: end;
+  gap: clamp(22px, 3vw, 42px);
+  font-family: var(--clinic-font);
+  font-size: 13px;
+  font-weight: 500;
+}
+.identity-header .main-nav > a:not(.nav-mobile-cta) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--clinic-green);
+  transition: color .2s;
+}
+.identity-header .main-nav > a:not(.nav-mobile-cta)::after {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  left: 0;
+  height: 1px;
+  background: var(--clinic-turquoise);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .2s;
+}
+.identity-header .main-nav > a:not(.nav-mobile-cta):hover {color: #008e7c;}
+.identity-header .main-nav > a:not(.nav-mobile-cta):hover::after {transform: scaleX(1);}
+.identity-header .main-nav .nav-mobile-cta {display: none;}
+.identity-header .header-cta {
+  grid-column: 3;
+  justify-self: end;
+  min-height: 44px;
+  padding: 12px 16px;
+  gap: 8px;
+  border: 1px solid var(--clinic-green);
+  border-radius: 4px;
+  background: var(--clinic-green);
+  color: #fff;
+  font-family: var(--clinic-font);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.identity-header .header-cta:hover {background: #07534f; border-color: #07534f; color: #fff; box-shadow: none; transform: none;}
+.identity-header .header-cta .icon {width: 17px; height: 17px;}
+.identity-header :focus-visible,
+.identity-hero :focus-visible {outline: 2px solid var(--clinic-turquoise); outline-offset: 5px;}
+
+.identity-hero {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 0;
+  overflow: clip;
+}
+.identity-grid {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(52px, 7vw, 108px);
+  padding-block: clamp(24px, 4vh, 42px) 76px;
+  padding-block: clamp(24px, 4svh, 42px) 76px;
+}
+.identity-hero .hero-copy {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 0 34px;
+}
+.hero-kicker {
+  margin-bottom: 18px;
+  color: var(--clinic-turquoise);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.identity-hero h1 {
+  color: var(--clinic-green);
+  font-family: var(--clinic-font);
+  font-size: clamp(54px, 6.4vw, 100px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: 1.02;
+}
+.identity-hero h1 span {display: block; white-space: nowrap;}
+.identity-hero .hero-description {
+  max-width: 440px;
+  margin-top: 24px;
+  color: var(--clinic-muted);
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: 400;
+  line-height: 1.65;
+}
+.identity-hero .hero-actions {display: flex; align-items: center; margin-top: 32px;}
+.identity-hero .appointment-button {
+  min-height: 58px;
+  padding: 17px 24px;
+  gap: 13px;
+  border-radius: 5px;
+  background: var(--clinic-green);
+  box-shadow: none;
+  color: #fff;
+  font-family: var(--clinic-font);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.identity-hero .appointment-button:hover {background: #07534f; box-shadow: none; transform: none;}
+.identity-hero .appointment-button .icon {width: 18px; height: 18px;}
+.rani-portrait {align-self: center; justify-self: center; width: min(100%, 80vh); width: min(100%, 80svh); display: flex; flex-direction: column; margin: 0; padding: 0;}
+.rani-photo-frame {width: 100%; height: auto; aspect-ratio: .99; overflow: hidden; background: transparent;}
+.rani-photo-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 26%;
+}
+.rani-caption {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 12px;
+  color: var(--clinic-muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+.rani-caption span {color: #9aaca9;}
+.hero-location {
+  position: absolute;
+  left: 0;
+  bottom: 29px;
+  color: var(--clinic-muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@media (max-width: 1050px) {
+  .identity-header .header-inner {width: calc(100% - 96px);}
+  .identity-grid {width: calc(100% - 96px);}
+  .identity-grid {gap: clamp(36px, 5vw, 60px);}
+  .identity-hero h1 {font-size: clamp(52px, 6vw, 68px);}
+}
+@media (max-width: 850px) {
+  .identity-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding-block: 30px 28px;
+  }
+  .identity-hero .hero-copy {padding: 0;}
+  .hero-location {position: static; margin-top: 1px; font-size: 10px;}
+}
+@media (max-width: 700px) {
+  html:has(.identity-header) {scroll-padding-top: 84px;}
+  .identity-header .header-inner,
+  .identity-grid {width: calc(100% - 40px);}
+  .identity-header .header-inner {height: 80px; gap: 12px;}
+  .identity-header {margin-bottom: -80px;}
+  .identity-header .header-inner {display: flex;}
+  .identity-header .identity-brand {width: 82px; height: 77px; flex-basis: 82px;}
+  .identity-header .header-cta {margin-left: auto; padding: 9px 12px; gap: 5px; min-height: 38px; font-size: 12px;}
+  .identity-header .header-cta .icon {width: 14px; height: 14px;}
+  .identity-header .menu-toggle {width: 28px; color: var(--clinic-green);}
+  .identity-header .menu-toggle span {width: 20px;}
+  .identity-header .main-nav {
+    position: fixed;
+    inset: 80px 0 auto;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 17px 20px 23px;
+    border: 0;
+    border-bottom: 1px solid #dce8e2;
+    background: var(--clinic-paper);
+    box-shadow: none;
+    color: var(--clinic-green);
+    font-family: var(--clinic-font);
+    font-size: 16px;
+  }
+  .identity-header .main-nav.is-open {display: flex;}
+  .identity-header .main-nav > a {padding-block: 11px;}
+  .identity-header .main-nav .nav-mobile-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 7px;
+    padding: 13px 15px;
+    border-radius: 4px;
+    background: var(--clinic-green);
+    color: #fff;
+    font-size: 13px;
+  }
+  .identity-header .main-nav .nav-mobile-cta::after {display: none;}
+  .identity-hero {overflow: visible;}
+  .identity-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding-block: 30px 28px;
+  }
+  .identity-hero .hero-copy {padding: 0;}
+  .hero-kicker {margin-bottom: 13px; font-size: 11px; letter-spacing: .15em;}
+  .identity-hero h1 {font-size: clamp(48px, 12vw, 68px); line-height: 1.04; letter-spacing: -.073em;}
+  .identity-hero .hero-description {max-width: 350px; margin-top: 16px; font-size: 14px; line-height: 1.65;}
+  .identity-hero .hero-actions {margin-top: 21px;}
+  .identity-hero .appointment-button {min-height: 52px; padding: 15px 19px; font-size: 13px;}
+  .rani-photo-frame {aspect-ratio: 1.03;}
+  .rani-photo-frame img {object-position: center 26%;}
+  .rani-caption {justify-content: flex-end; padding-top: 10px; font-size: 10px;}
+  .hero-location {color: var(--clinic-muted);}
+}
+@media (max-width: 370px) {
+  .identity-header .header-inner,
+  .identity-grid {width: calc(100% - 32px);}
+  .identity-header .header-inner {height: 74px;}
+  .identity-header {margin-bottom: -74px;}
+  .identity-header .identity-brand {width: 75px; height: 70px; flex-basis: 75px;}
+  .identity-header .main-nav {top: 74px;}
+  .identity-hero h1 {font-size: 46px;}
+  .rani-caption {font-size: 9px;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .identity-hero .appointment-button:hover {transform: none;}
+}

@@ -31,13 +31,13 @@ O servidor aceita apenas os arquivos públicos da página e da pasta `assets`; p
 
 ## Conteúdo e recursos
 
-- Identidade visual em azul, tipografia Sora e DM Sans, e símbolo de sorriso em SVG.
+- Primeira dobra com a logo oficial fornecida, paleta turquesa e verde, tipografia Raleway e fotografia real da Dra. Rani. Os estilos dessa área ficam em hero.css.
 - Layout responsivo, menu móvel e botão de agendamento.
 - Abas acessíveis por teclado com mensagens de WhatsApp específicas para cada interesse.
 - Animações com GSAP e ScrollTrigger, respeitando a preferência por movimento reduzido.
-- Mapa interativo Leaflet/OpenStreetMap, cálculo local de distância e link de rota no Google Maps.
-- Fotografias e bibliotecas servidas localmente. Fontes e tiles do mapa precisam de internet.
-- Nenhum backend, formulário de cadastro, chave de API ou serviço de rastreamento.
+- Mapa colorido com MapLibre GL JS e OpenFreeMap, ponto da clínica nas coordenadas informadas e rota de carro desenhada após autorização de localização.
+- A distância e o tempo são calculados pelo serviço público de rotas FOSSGIS/OSRM. O Google Maps também permanece disponível como alternativa.
+- Fotografias e animações servidas localmente. Mapas, rotas e fontes precisam de internet; não há backend nem chave de API.
 
 ## Dados da clínica
 
@@ -45,23 +45,24 @@ O servidor aceita apenas os arquivos públicos da página e da pasta `assets`; p
 **Instagram:** [@dra.rani_dentista](https://www.instagram.com/dra.rani_dentista/)  
 **Endereço:** Av. Benedito Santana, Amarante, São Gonçalo do Amarante – RN, 59296-515.
 
-O endereço fornecido não inclui número. Por isso, o mapa usa **uma referência aproximada pelo CEP**, informada na página. Confirme o ponto exato com a clínica e atualize `CLINIC.latitude` e `CLINIC.longitude` em `script.js`; atualize também o endereço e o iframe de fallback em `index.html`.
+O endereço fornecido não inclui número. O ponto exato informado pela clínica é `-5.773978986883983, -35.27340940058038`; ele é usado no marcador, na rota e no destino do Google Maps.
 
-A distância exibida é **em linha reta**, calculada pela fórmula de Haversine. Não é distância de percurso ou tempo de viagem. A geolocalização só é solicitada ao clicar e exige HTTPS ou localhost. O cálculo não envia coordenadas a um backend. O mapa solicita tiles externos; ao abrir a rota, o Google Maps recebe a origem escolhida.
+A localização do visitante só é solicitada ao clicar e exige HTTPS ou localhost. A página procura por até 8 segundos uma leitura recente, escolhendo a melhor precisão recebida nesse intervalo; depois, calcula a rota com esse ponto e informa a precisão estimada pelo navegador. As coordenadas são enviadas ao serviço público FOSSGIS/OSRM para traçar a rota e calcular distância e tempo; o provedor pode registrá-las em seus logs. A página não mantém backend próprio. A origem também é incluída no Google Maps quando o visitante abre a alternativa de rota.
 
 ## Fotografias e bibliotecas
 
-As fotografias são ilustrativas e estão identificadas na página; não retratam a Dra. Rani, pacientes da clínica ou suas instalações.
+A primeira dobra usa a foto oficial da Dra. Rani, publicada na página de contato vinculada ao Instagram, e a logo fornecida pelo responsável pelo projeto. A foto da seção de cuidado odontológico continua sendo ilustrativa.
 
-- [Retrato de sorriso — Leonardo Dourado / Pexels](https://www.pexels.com/photo/beautiful-woman-in-white-shirt-smiling-14059761/).
+- [Foto oficial da Dra. Rani e referência da marca](https://trakto.link/drarani). Logo fornecida pelo responsável pelo projeto.
+- [Retrato ilustrativo anterior, preservado nos arquivos — Leonardo Dourado / Pexels](https://www.pexels.com/photo/beautiful-woman-in-white-shirt-smiling-14059761/).
 - [Cuidado odontológico — Pexels, foto 5355695](https://www.pexels.com/photo/5355695/).
-- [Leaflet 1.9.4](https://leafletjs.com/), licença BSD de duas cláusulas.
 - [GSAP 3.13.0 e ScrollTrigger](https://gsap.com/), licença padrão GSAP. Cabeçalhos de licença preservados nos arquivos distribuídos.
+- [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) e [OpenFreeMap](https://openfreemap.org/), usados para o mapa vetorial colorido.
+- [FOSSGIS/OSRM](https://routing.openstreetmap.de/about.html), usado para calcular o percurso de carro.
 - [Sora](https://fonts.google.com/specimen/Sora) e [DM Sans](https://fonts.google.com/specimen/DM+Sans), distribuídas pelo Google Fonts.
 
 A interação de abas foi inspirada nos padrões públicos da comunidade [21st.dev](https://21st.dev/community/components), adaptada em JavaScript nativo para este projeto.
 
 ## Publicar
 
-É um site estático: publique `index.html`, `styles.css`, `script.js`, `favicon.svg` e `assets/` em uma hospedagem com HTTPS. O arquivo `server.mjs` é apenas o servidor de prévia local. Nenhuma etapa de build é necessária.
-
+É um site estático: publique `index.html`, `styles.css`, `hero.css`, `script.js`, `favicon.svg` e `assets/` em uma hospedagem com HTTPS. O arquivo `server.mjs` é apenas o servidor de prévia local. Nenhuma etapa de build é necessária.

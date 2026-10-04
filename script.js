@@ -1,9 +1,7 @@
-// The supplied address has no street number. Replace these coordinates when
-// the exact clinic pin is confirmed. This is currently a reference for the CEP.
+// Exact clinic pin supplied by the clinic.
 const CLINIC = {
-  latitude: -5.77139,
-  longitude: -35.26867,
-  address: "Av. Benedito Santana, Amarante, São Gonçalo do Amarante - RN, 59296-515",
+  latitude: -5.773978986883983,
+  longitude: -35.27340940058038,
 };
 const WHATSAPP_PHONE = "5584998035995";
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -38,131 +36,97 @@ window.matchMedia("(min-width: 701px)").addEventListener("change", (event) => {
   if (event.matches) setMenu(false);
 });
 const header = document.querySelector(".site-header");
+const secondSection = document.querySelector("#cuidado");
+function updateHeaderVisibility() {
+  const secondSectionTop = secondSection.getBoundingClientRect().top + window.scrollY;
+  const showHeader = window.scrollY >= secondSectionTop - 1;
+  header.classList.toggle("is-visible", showHeader);
+  header.classList.toggle("is-scrolled", showHeader);
+  header.inert = !showHeader;
+}
+updateHeaderVisibility();
 let scrollScheduled = false;
 window.addEventListener("scroll", () => {
   if (scrollScheduled) return;
   scrollScheduled = true;
   requestAnimationFrame(() => {
-    header.classList.toggle("is-scrolled", window.scrollY > 10);
+    updateHeaderVisibility();
     scrollScheduled = false;
   });
 }, { passive: true });
+window.addEventListener("load", updateHeaderVisibility, { once: true });
 
-const careOptions = {
-  health: {
-    label: "Seu primeiro passo", title: "Vamos cuidar da sua saúde bucal.",
-    description: "Uma avaliação para entender seu sorriso e conversar sobre o cuidado de que você precisa.",
-    points: ["Conte o que está sentindo", "Entenda os próximos passos"],
-    action: "Conversar sobre meu cuidado",
-    message: "Olá, Dra. Rani! Gostaria de agendar uma avaliação odontológica no Espaço Sorriso.",
-    icon: "i-tooth", caption: "Cuidado que começa com você.",
-  },
-  smile: {
-    label: "Um sorriso com a sua personalidade", title: "Seu sorriso merece essa conversa.",
-    description: "Conte o que você gostaria de melhorar. A avaliação é o primeiro passo para conhecer as possibilidades para o seu sorriso.",
-    points: ["Compartilhe seus desejos", "Conheça as possibilidades"],
-    action: "Conversar sobre meu sorriso",
-    message: "Olá, Dra. Rani! Gostaria de conversar sobre as possibilidades para melhorar meu sorriso.",
-    icon: "i-smile", caption: "Mais espaço para sorrir.",
-  },
-  question: {
-    label: "Pode perguntar", title: "A gente começa ouvindo você.",
-    description: "Quer saber sobre horários, atendimento ou como marcar sua consulta? Fale diretamente com a clínica e tire suas dúvidas.",
-    points: ["Pergunte sem pressa", "Combine o melhor horário"],
-    action: "Tirar minha dúvida",
-    message: "Olá, Dra. Rani! Tenho uma dúvida sobre o atendimento no Espaço Sorriso.",
-    icon: "i-chat", caption: "Uma boa conversa faz diferença.",
-  },
-};
-const careTabs = Array.from(document.querySelectorAll(".care-tab"));
-const carePanel = document.querySelector("#carePanel");
-const careContent = document.querySelector(".care-content");
-const careArt = document.querySelector(".care-art");
-const indicator = document.querySelector(".tab-indicator");
-let selectedCare = "health";
-
-function positionTabIndicator() {
-  const tab = careTabs.find((item) => item.dataset.care === selectedCare);
-  indicator.style.left = tab.offsetLeft + "px";
-  indicator.style.width = tab.offsetWidth + "px";
-}
-function selectCare(tab, moveFocus = false) {
-  const key = tab.dataset.care;
-  if (selectedCare === key) {
-    if (moveFocus) tab.focus();
-    return;
-  }
-  selectedCare = key;
-  const option = careOptions[key];
-  careTabs.forEach((item) => {
-    const selected = item === tab;
-    item.setAttribute("aria-selected", String(selected));
-    item.tabIndex = selected ? 0 : -1;
-  });
-  carePanel.setAttribute("aria-labelledby", tab.id);
-  document.querySelector("#careLabel").textContent = option.label;
-  document.querySelector("#carePanelTitle").textContent = option.title;
-  document.querySelector("#carePanelDescription").textContent = option.description;
-  const points = document.querySelector("#carePoints");
-  points.replaceChildren(...option.points.map((text) => {
-    const item = document.createElement("li");
-    item.textContent = text;
-    return item;
-  }));
-  const cta = document.querySelector("#careCta");
-  cta.firstChild.textContent = option.action + " ";
-  cta.href = whatsappUrl(option.message);
-  careArt.dataset.art = key;
-  careArt.querySelector(".care-art-icon use").setAttribute("href", "#" + option.icon);
-  document.querySelector("#artCaption").textContent = option.caption;
-  positionTabIndicator();
-  if (moveFocus) tab.focus();
-  if (window.gsap && !motionPreference.matches) {
-    gsap.killTweensOf([careContent, ".care-art-icon"]);
-    gsap.fromTo(careContent, { opacity: .35, y: 8 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
-    gsap.fromTo(".care-art-icon", { scale: .87, rotate: -6 }, { scale: 1, rotate: 0, duration: .55, ease: "power3.out" });
-  }
-}
-careTabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => selectCare(tab));
-  tab.addEventListener("keydown", (event) => {
-    let next;
-    if (event.key === "ArrowRight") next = (index + 1) % careTabs.length;
-    if (event.key === "ArrowLeft") next = (index - 1 + careTabs.length) % careTabs.length;
-    if (event.key === "Home") next = 0;
-    if (event.key === "End") next = careTabs.length - 1;
-    if (next !== undefined) {
-      event.preventDefault();
-      selectCare(careTabs[next], true);
-    }
-  });
+document.querySelectorAll("[data-care-message]").forEach((link) => {
+  link.href = whatsappUrl(link.dataset.careMessage);
 });
-positionTabIndicator();
-if (window.ResizeObserver) new ResizeObserver(positionTabIndicator).observe(document.querySelector(".care-tabs"));
-else window.addEventListener("resize", positionTabIndicator);
-document.fonts?.ready.then(positionTabIndicator);
 
 let map;
+let mapReadyPromise;
+let clinicMarker;
 let visitorMarker;
-let distanceLine;
-function initializeMap() {
-  if (map || !window.L) return;
-  const point = [CLINIC.latitude, CLINIC.longitude];
-  map = L.map("clinicMap", { scrollWheelZoom: false, zoomControl: false }).setView(point, 15);
-  L.control.zoom({ position: "topright" }).addTo(map);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
-  const icon = L.divIcon({
-    className: "", iconSize: [44, 44], iconAnchor: [22, 22],
-    html: '<div class="clinic-marker"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22c2 12 10 19 17 19s15-7 17-19M12 11v5m24-5v5"/></svg></div>',
-  });
-  L.marker(point, { icon, title: "Espaço Sorriso — referência aproximada pelo CEP", alt: "Referência aproximada da clínica" })
-    .addTo(map).bindPopup('<div class="map-popup"><strong>Espaço Sorriso</strong><p>Referência aproximada no Amarante.<br>Confirme o ponto exato com a clínica.</p></div>');
-  document.querySelector(".map-visual").classList.add("map-ready");
-  requestAnimationFrame(() => map.invalidateSize());
-}
+let routeSource;
+let lastRouteRequestAt = 0;
+const mapFrame = document.querySelector(".location-map-frame");
 const mapElement = document.querySelector("#clinicMap");
+const distanceButton = document.querySelector("#distanceButton");
+const distanceButtonLabel = document.querySelector("#distanceButtonLabel");
+const distanceResult = document.querySelector("#distanceResult");
+
+function createMarker(className, label) {
+  const element = document.createElement("div");
+  element.className = className;
+  element.setAttribute("role", "img");
+  element.setAttribute("aria-label", label);
+  if (className === "clinic-marker") {
+    const glyph = document.createElement("span");
+    glyph.className = "marker-glyph";
+    glyph.setAttribute("aria-hidden", "true");
+    const logo = document.createElement("img");
+    logo.src = "assets/logo-espaco-sorriso.png";
+    logo.alt = "";
+    logo.setAttribute("aria-hidden", "true");
+    glyph.append(logo);
+    element.append(glyph);
+  }
+  return element;
+}
+
+function initializeMap() {
+  if (map || !window.maplibregl) return;
+  map = new maplibregl.Map({
+    container: mapElement,
+    style: "https://tiles.openfreemap.org/styles/liberty",
+    center: [CLINIC.longitude, CLINIC.latitude],
+    zoom: 15,
+    attributionControl: false,
+    cooperativeGestures: false,
+    scrollZoom: true,
+  });
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+  map.addControl(new maplibregl.AttributionControl({
+    compact: true,
+    customAttribution: [
+      '<a href="https://routing.openstreetmap.de/about.html" target="_blank" rel="noopener noreferrer">Rotas FOSSGIS/OSRM</a>',
+      '<a href="https://www.openstreetmap.org/edit?editor=id#map=17/-5.773978986883983/-35.27340940058038" target="_blank" rel="noopener noreferrer">Corrigir mapa</a>',
+    ],
+  }), "bottom-right");
+
+  mapReadyPromise = new Promise((resolve) => map.once("load", () => {
+    clinicMarker = new maplibregl.Marker({
+      element: createMarker("clinic-marker", "Espaço Sorriso RN"),
+      anchor: "bottom",
+    }).setLngLat([CLINIC.longitude, CLINIC.latitude])
+      .setPopup(new maplibregl.Popup({ offset: 24 }).setText("Espaço Sorriso RN · localização informada pela clínica"))
+      .addTo(map);
+    mapFrame.classList.add("map-ready");
+    mapElement.setAttribute("aria-hidden", "false");
+    mapElement.tabIndex = 0;
+    mapFrame.querySelector("iframe").setAttribute("aria-hidden", "true");
+    map.resize();
+    resolve(true);
+  }));
+}
+
 if ("IntersectionObserver" in window) {
   const mapObserver = new IntersectionObserver((entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
@@ -173,70 +137,170 @@ if ("IntersectionObserver" in window) {
   mapObserver.observe(mapElement);
 } else initializeMap();
 
-// Great-circle distance; no location request is made until the visitor clicks.
-function distanceKm(latitude, longitude) {
-  const radians = (value) => value * Math.PI / 180;
-  const deltaLat = radians(CLINIC.latitude - latitude);
-  const deltaLng = radians(CLINIC.longitude - longitude);
-  const a = Math.sin(deltaLat / 2) ** 2 +
-    Math.cos(radians(latitude)) * Math.cos(radians(CLINIC.latitude)) * Math.sin(deltaLng / 2) ** 2;
-  return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(Math.max(0, 1 - a)));
-}
-const distanceButton = document.querySelector("#distanceButton");
-const distanceButtonLabel = document.querySelector("#distanceButtonLabel");
-const distanceResult = document.querySelector("#distanceResult");
+window.addEventListener("load", initializeMap, { once: true });
+
 function locationError(message) {
   distanceButton.disabled = false;
   distanceButtonLabel.textContent = "Tentar novamente";
   distanceResult.classList.add("is-error");
   distanceResult.textContent = message;
 }
-distanceButton.addEventListener("click", () => {
-  if (!navigator.geolocation) return locationError("Seu navegador não oferece localização. Você pode abrir a rota no Google Maps.");
-  if (!window.isSecureContext) return locationError("Abra o site em HTTPS para calcular a distância. A rota no Google Maps continua disponível.");
-  distanceButton.disabled = true;
-  distanceButtonLabel.textContent = "Encontrando você…";
-  distanceResult.classList.remove("is-error");
-  distanceResult.textContent = "Permita o acesso à localização no navegador para continuar.";
-  navigator.geolocation.getCurrentPosition((position) => {
-    const { latitude, longitude, accuracy } = position.coords;
-    const distance = distanceKm(latitude, longitude);
-    const inMeters = distance < 1;
-    const value = inMeters ? Math.round(distance * 1000) : distance;
-    const formatted = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: inMeters ? 0 : 1 }).format(value);
-    document.querySelector("#distanceValue").textContent = formatted;
-    document.querySelector("#distanceUnit").textContent = inMeters ? "m" : "km";
-    distanceResult.textContent = "Você está a aproximadamente " + formatted + (inMeters ? " m" : " km") +
-      " da referência da clínica, em linha reta." +
-      (accuracy > 1000 ? " Sua localização tem baixa precisão; o resultado é uma estimativa." : "");
-    distanceButton.disabled = false;
-    distanceButtonLabel.textContent = "Atualizar minha distância";
-    const routeUrl = new URL("https://www.google.com/maps/dir/");
-    routeUrl.searchParams.set("api", "1");
-    routeUrl.searchParams.set("destination", CLINIC.address);
-    routeUrl.searchParams.set("origin", latitude + "," + longitude);
-    document.querySelector("#directionsLink").href = routeUrl.toString();
-    initializeMap();
-    if (map) {
-      const visitor = [latitude, longitude];
-      const clinic = [CLINIC.latitude, CLINIC.longitude];
-      if (visitorMarker) map.removeLayer(visitorMarker);
-      if (distanceLine) map.removeLayer(distanceLine);
-      visitorMarker = L.marker(visitor, {
-        title: "Sua localização aproximada", alt: "Sua localização",
-        icon: L.divIcon({ className: "", html: '<div class="visitor-marker"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
-      }).addTo(map).bindPopup("Sua localização aproximada");
-      distanceLine = L.polyline([visitor, clinic], { color: "#184be9", weight: 2, dashArray: "6 8" }).addTo(map);
-      map.fitBounds(distanceLine.getBounds(), { padding: [55, 55], maxZoom: 16, animate: !motionPreference.matches });
+
+function clearDisplayedRoute() {
+  if (routeSource) routeSource.setData({ type: "FeatureCollection", features: [] });
+  if (visitorMarker) {
+    visitorMarker.remove();
+    visitorMarker = undefined;
+  }
+}
+
+function updateDirectionsLink(latitude, longitude) {
+  const routeUrl = new URL("https://www.google.com/maps/dir/");
+  routeUrl.searchParams.set("api", "1");
+  routeUrl.searchParams.set("destination", CLINIC.latitude + "," + CLINIC.longitude);
+  routeUrl.searchParams.set("origin", latitude + "," + longitude);
+  routeUrl.searchParams.set("travelmode", "driving");
+  document.querySelector("#directionsLink").href = routeUrl.toString();
+}
+
+async function drawRoute(route, origin, accuracy) {
+  initializeMap();
+  if (!map || !mapReadyPromise) return false;
+  const ready = await Promise.race([
+    mapReadyPromise,
+    new Promise((resolve) => window.setTimeout(() => resolve(false), 12000)),
+  ]);
+  if (!ready || !map.isStyleLoaded()) return false;
+
+  const feature = { type: "Feature", properties: {}, geometry: route.geometry };
+  if (routeSource) routeSource.setData(feature);
+  else {
+    map.addSource("clinic-driving-route", { type: "geojson", data: feature });
+    const firstSymbolLayer = map.getStyle().layers.find((layer) => layer.type === "symbol");
+    const beforeLayer = firstSymbolLayer && firstSymbolLayer.id;
+    map.addLayer({
+      id: "clinic-driving-route-casing", type: "line", source: "clinic-driving-route",
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#fffdf5", "line-width": 9, "line-opacity": .96 },
+    }, beforeLayer);
+    map.addLayer({
+      id: "clinic-driving-route", type: "line", source: "clinic-driving-route",
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#d6a654", "line-width": 5, "line-opacity": 1 },
+    }, beforeLayer);
+    routeSource = map.getSource("clinic-driving-route");
+  }
+
+  if (visitorMarker) visitorMarker.remove();
+  const accuracyInMeters = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(accuracy);
+  const visitorLabel = "Sua localização (precisão informada pelo navegador: até ±" + accuracyInMeters + " m)";
+  visitorMarker = new maplibregl.Marker({
+    element: createMarker("visitor-marker", visitorLabel),
+    anchor: "center",
+  }).setLngLat(origin)
+    .setPopup(new maplibregl.Popup({ offset: 14 }).setText(visitorLabel))
+    .addTo(map);
+
+  const bounds = new maplibregl.LngLatBounds();
+  route.geometry.coordinates.forEach((coordinate) => bounds.extend(coordinate));
+  map.fitBounds(bounds, {
+    padding: { top: 54, right: 54, bottom: 54, left: 54 },
+    maxZoom: 16,
+    duration: motionPreference.matches ? 0 : 650,
+  });
+  return true;
+}
+
+async function requestDrivingRoute(latitude, longitude, accuracy) {
+  updateDirectionsLink(latitude, longitude);
+  const endpoint = "https://routing.openstreetmap.de/routed-car/route/v1/driving/" +
+    longitude + "," + latitude + ";" + CLINIC.longitude + "," + CLINIC.latitude +
+    "?overview=full&geometries=geojson&steps=false";
+  let routeSucceeded = false;
+  try {
+    const waitForRateLimit = Math.max(0, 1000 - (Date.now() - lastRouteRequestAt));
+    if (waitForRateLimit) await new Promise((resolve) => window.setTimeout(resolve, waitForRateLimit));
+    lastRouteRequestAt = Date.now();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    let result;
+    try {
+      const response = await fetch(endpoint, { signal: controller.signal });
+      if (!response.ok) throw new Error("route service unavailable");
+      result = await response.json();
+    } finally {
+      window.clearTimeout(timeout);
     }
-  }, (error) => {
-    const messages = {
-      1: "A localização não foi permitida. Você pode liberar o acesso no navegador ou abrir a rota no Google Maps.",
-      2: "Não foi possível localizar você agora. Confira o GPS ou abra a rota no Google Maps.",
-      3: "A localização demorou a responder. Tente novamente ou abra a rota no Google Maps.",
+    const route = result.code === "Ok" && result.routes && result.routes[0];
+    if (!route) throw new Error("route not found");
+
+    const kilometers = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 }).format(route.distance / 1000);
+    const minutes = Math.max(1, Math.round(route.duration / 60));
+    distanceResult.classList.remove("is-error");
+    distanceResult.textContent = "Rota de carro: " + kilometers + " km · cerca de " + minutes +
+      " min, sem considerar o trânsito em tempo real. Localização com precisão de até ±" +
+      new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(accuracy) + " m.";
+    const routeDrawn = await drawRoute(route, [longitude, latitude], accuracy);
+    routeSucceeded = routeDrawn;
+    if (!routeDrawn) distanceResult.textContent += " O mapa não carregou; abra o Google Maps para ver o traçado.";
+  } catch {
+    distanceResult.classList.add("is-error");
+    distanceResult.textContent = "Não foi possível traçar a rota agora. Abra o Google Maps para ver o percurso.";
+  } finally {
+    distanceButton.disabled = false;
+    distanceButtonLabel.textContent = routeSucceeded ? "Atualizar minha rota" : "Tentar novamente";
+  }
+}
+
+function getBestLocationFix() {
+  return new Promise((resolve, reject) => {
+    let watchId;
+    let bestPosition;
+    const finish = (position, error) => {
+      window.clearTimeout(timer);
+      if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
+      if (position) resolve(position);
+      else reject(error || { code: 2 });
     };
-    locationError(messages[error.code] || "Não foi possível calcular a distância. Tente novamente.");
-  }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 });
+    const timer = window.setTimeout(() => finish(bestPosition, { code: 3 }), 8000);
+    try {
+      watchId = navigator.geolocation.watchPosition((position) => {
+        if (!bestPosition || position.coords.accuracy < bestPosition.coords.accuracy) bestPosition = position;
+        const accuracy = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(position.coords.accuracy);
+        distanceResult.textContent = "Precisão atual: ±" + accuracy + " m. Buscando uma leitura mais exata…";
+        if (position.coords.accuracy <= 75) finish(bestPosition);
+      }, (error) => finish(bestPosition, error), {
+        enableHighAccuracy: true,
+        timeout: 12000,
+        maximumAge: 0,
+      });
+    } catch (error) {
+      finish(bestPosition, error);
+    }
+  });
+}
+
+distanceButton.addEventListener("click", async () => {
+  if (!navigator.geolocation) return locationError("Seu navegador não oferece localização. Abra a rota no Google Maps.");
+  if (!window.isSecureContext) return locationError("Abra o site em HTTPS para usar sua localização. A rota no Google Maps continua disponível.");
+  distanceButton.disabled = true;
+  clearDisplayedRoute();
+  distanceButtonLabel.textContent = "Localizando…";
+  distanceResult.classList.remove("is-error");
+  distanceResult.textContent = "Aguardando uma leitura atual da localização…";
+  try {
+    const position = await getBestLocationFix();
+    const { latitude, longitude, accuracy } = position.coords;
+    distanceButtonLabel.textContent = "Traçando rota…";
+    await requestDrivingRoute(latitude, longitude, accuracy);
+  } catch (error) {
+    const messages = {
+      1: "A localização não foi permitida. Libere o acesso ou abra o Google Maps.",
+      2: "Não foi possível localizar você agora. Confira o GPS ou abra o Google Maps.",
+      3: "A localização demorou a responder. Tente novamente ou abra o Google Maps.",
+    };
+    locationError(messages[error.code] || "Não foi possível calcular a rota. Tente novamente.");
+  }
 });
 
 const mobileContact = document.querySelector(".mobile-contact");
@@ -262,25 +326,36 @@ if ("IntersectionObserver" in window) {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   const mm = gsap.matchMedia();
-  mm.add({ desktop: "(min-width: 901px)", reduceMotion: "(prefers-reduced-motion: reduce)" }, (context) => {
+  mm.add({ reduceMotion: "(prefers-reduced-motion: reduce)" }, (context) => {
     if (context.conditions.reduceMotion) return;
     const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
-    intro.from(".hero-place", { y: 12, opacity: 0, duration: .55 })
-      .from(".hero h1 span", { y: 35, opacity: 0, duration: .8, stagger: .1 }, .1)
-      .from([".hero-description", ".hero-actions", ".hero-address"], { y: 18, opacity: 0, duration: .65, stagger: .1 }, .4)
-      .from(".hero-photo", { y: 25, opacity: 0, duration: .9 }, .15)
-      .from([".hello-label", ".hero-corner"], { scale: .8, opacity: 0, duration: .6, stagger: .1 }, .6);
-    document.querySelectorAll(".section-heading, .doctor-copy, .location-heading, .faq-heading, .contact-inner").forEach((section) => {
-      gsap.from(section, { y: 22, opacity: 0, duration: .7, ease: "power2.out",
-        scrollTrigger: { trigger: section, start: "top 91%", once: true } });
-    });
-    if (context.conditions.desktop) {
-      gsap.fromTo(".hero-photo > img", { yPercent: -2, scale: 1.06 }, {
-        yPercent: 4, ease: "none",
-        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 },
+    intro.from(".identity-hero .hero-copy > *", { y: 18, autoAlpha: 0, duration: .72, stagger: .1 })
+      .from(".rani-photo-frame", { y: 16, scale: .985, autoAlpha: 0, duration: .9, ease: "power2.out" }, .12)
+      .from(".rani-caption", { y: 8, autoAlpha: 0, duration: .5 }, .55);
+
+    const reveals = [
+      [".care-image-frame", ".care-section", 0],
+      [".care-copy > *", ".care-section", .08],
+      [".location-copy > *", ".location-section", .07],
+      [".location-panel", ".location-section", 0],
+      [".faq-intro > *", ".faq-section", .07],
+      [".faq-list details", ".faq-list", .08],
+      [".contact-copy", ".contact-section", 0],
+      [".contact-action", ".contact-section", 0],
+      [".footer-logo, .footer-license, .footer-instagram, .footer-copyright", ".site-footer", .06],
+    ];
+    reveals.forEach(([target, trigger, stagger]) => {
+      const elements = gsap.utils.toArray(target);
+      if (!elements.length) return;
+      gsap.from(elements, {
+        y: 18,
+        autoAlpha: 0,
+        duration: .68,
+        ease: "power2.out",
+        stagger,
+        scrollTrigger: { trigger, start: "top 88%", once: true },
       });
-    }
+    });
   });
   window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
 }
-
